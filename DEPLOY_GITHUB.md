@@ -17,7 +17,15 @@ Tu proyecto ha sido optimizado y configurado para desplegarse automáticamente e
     *   Haz clic en **Settings** (Configuración) > **Pages** (en el menú lateral izquierdo).
     *   En **Build and deployment** > **Source**, selecciona **GitHub Actions**.
 
-3.  **¡Listo!**:
+3.  **Configurar Variables de Entorno**:
+    *   Este paso es **CRÍTICO** para que la app se conecte a Supabase.
+    *   En tu repositorio, ve a **Settings** > **Secrets and variables** > **Actions**.
+    *   Haz clic en **New repository secret**.
+    *   Agrega las siguientes dos variables (copia los valores de tu archivo `.env.local`):
+        *   Name: `NEXT_PUBLIC_SUPABASE_URL`
+        *   Name: `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+
+4.  **¡Listo!**:
     *   Al seleccionar "GitHub Actions", GitHub detectará automáticamente el archivo de flujo de trabajo que creé en `.github/workflows/deploy.yml`.
     *   Cada vez que hagas un `git push`, tu sitio se construirá y desplegará automáticamente.
 

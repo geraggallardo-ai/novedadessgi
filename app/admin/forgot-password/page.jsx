@@ -17,8 +17,14 @@ export default function ForgotPasswordPage() {
         setIsLoading(true);
 
         try {
+            // Construir la URL de redirección dinámicamente para soportar subrutas (GitHub Pages)
+            // Si estamos en .../admin/forgot-password, queremos ir a .../admin/reset-password
+            const currentPath = window.location.pathname;
+            const basePath = currentPath.substring(0, currentPath.lastIndexOf('/'));
+            const redirectUrl = `${window.location.origin}${basePath}/reset-password`;
+
             const { error: resetError } = await supabase.auth.resetPasswordForEmail(email, {
-                redirectTo: `${window.location.origin}/admin/reset-password`,
+                redirectTo: redirectUrl,
             });
 
             if (resetError) throw resetError;

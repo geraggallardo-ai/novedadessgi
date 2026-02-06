@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Lock, Eye, EyeOff, Megaphone, AlertCircle, CheckCircle, Shield } from 'lucide-react';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
 export default function ResetPasswordPage() {
@@ -111,16 +112,16 @@ export default function ResetPasswordPage() {
                     <p className="text-gray-500 mb-6">
                         El enlace de recuperación no es válido o ha expirado. Por favor, solicita un nuevo enlace.
                     </p>
-                    <a
+                    <Link
                         href="/admin/forgot-password"
                         className="inline-block w-full py-3.5 rounded-xl bg-gradient-to-r from-primary-600 to-primary-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 text-center"
                     >
                         Solicitar Nuevo Enlace
-                    </a>
+                    </Link>
                     <div className="mt-4">
-                        <a href="/admin/login" className="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                        <Link href="/admin/login" className="text-sm text-gray-500 hover:text-primary-600 transition-colors">
                             ← Volver al inicio de sesión
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -159,12 +160,12 @@ export default function ResetPasswordPage() {
                             <p className="text-gray-500 mb-6">
                                 Tu contraseña ha sido actualizada exitosamente. Serás redirigido al inicio de sesión en unos segundos.
                             </p>
-                            <a
+                            <Link
                                 href="/admin/login"
                                 className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium transition-colors"
                             >
                                 Ir al inicio de sesión →
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         /* Form State */

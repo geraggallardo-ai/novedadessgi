@@ -1,6 +1,7 @@
 'use client';
 
 import { Megaphone, Sparkles } from 'lucide-react';
+import Link from 'next/link';
 
 export default function Header() {
     return (
@@ -51,12 +52,12 @@ export default function Header() {
                     </div>
 
                     {/* Admin button */}
-                    <a
+                    <Link
                         href="/admin/login"
                         className="hidden sm:flex items-center gap-2 px-4 py-2 rounded-xl bg-white/10 backdrop-blur-sm border border-white/20 text-sm font-medium hover:bg-white/20 transition-all duration-300"
                     >
                         Administrar
-                    </a>
+                    </Link>
                 </div>
             </div>
 

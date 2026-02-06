@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { Mail, Lock, Eye, EyeOff, Megaphone, AlertCircle } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 
 export default function LoginPage() {
     const router = useRouter();
@@ -97,12 +98,12 @@ export default function LoginPage() {
                                 <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                                     Contraseña
                                 </label>
-                                <a
+                                <Link
                                     href="/admin/forgot-password"
                                     className="text-xs text-primary-600 hover:text-primary-700 hover:underline transition-colors"
                                 >
                                     ¿Olvidaste tu contraseña?
-                                </a>
+                                </Link>
                             </div>
                             <div className="relative">
                                 <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
@@ -149,9 +150,9 @@ export default function LoginPage() {
 
                     {/* Back link */}
                     <div className="mt-8 text-center">
-                        <a href="/" className="text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                        <Link href="/" className="text-sm text-gray-500 hover:text-primary-600 transition-colors">
                             ← Volver a la cartelera
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

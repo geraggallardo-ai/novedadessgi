@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Mail, Megaphone, AlertCircle, CheckCircle, ArrowLeft } from 'lucide-react';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 
 export default function ForgotPasswordPage() {
@@ -63,13 +64,13 @@ export default function ForgotPasswordPage() {
                             <p className="text-sm text-gray-400 mb-6">
                                 Si no ves el email, revisa tu carpeta de spam.
                             </p>
-                            <a
+                            <Link
                                 href="/admin/login"
                                 className="inline-flex items-center gap-2 text-primary-600 hover:text-primary-700 font-medium transition-colors"
                             >
                                 <ArrowLeft className="w-4 h-4" />
                                 Volver al inicio de sesión
-                            </a>
+                            </Link>
                         </div>
                     ) : (
                         /* Form State */
@@ -136,10 +137,10 @@ export default function ForgotPasswordPage() {
 
                             {/* Back link */}
                             <div className="mt-8 text-center">
-                                <a href="/admin/login" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                                <Link href="/admin/login" className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 transition-colors">
                                     <ArrowLeft className="w-4 h-4" />
                                     Volver al inicio de sesión
-                                </a>
+                                </Link>
                             </div>
                         </>
                     )}

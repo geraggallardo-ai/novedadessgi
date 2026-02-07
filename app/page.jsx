@@ -85,7 +85,7 @@ export default function HomePage() {
                 ) : (
                     <GridMosaico
                         novedades={novedades}
-                        onVerDetalle={(novedad) => setSelectedNovedad(novedad)}
+                        onCardClick={(novedad) => setSelectedNovedad(novedad)}
                     />
                 )}
             </main>

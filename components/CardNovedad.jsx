@@ -1,8 +1,23 @@
 'use client';
 
-import { Play, FileText, Image as ImageIcon, ExternalLink, Eye } from 'lucide-react';
+import { Play, FileText, Image as ImageIcon, ExternalLink, Eye, Share2 } from 'lucide-react';
 
 export default function CardNovedad({ novedad, onClick, index = 0 }) {
+    const handleShare = (e) => {
+        e.stopPropagation();
+        if (navigator.share) {
+            navigator.share({
+                title: novedad.titulo,
+                text: novedad.descripcion,
+                url: window.location.href,
+            }).catch(console.error);
+        } else {
+            // Fallback: Copiar al portapapeles
+            navigator.clipboard.writeText(`${novedad.titulo}\n\n${novedad.descripcion}\n\n${window.location.href}`);
+            alert('¡Enlace copiado al portapapeles!');
+        }
+    };
+
     // Iconos por tipo de contenido
     const icons = {
         video: <Play className="w-4 h-4" />,
@@ -94,8 +109,17 @@ export default function CardNovedad({ novedad, onClick, index = 0 }) {
                     </span>
                 </div>
 
+                {/* Share button floating on top right */}
+                <button
+                    onClick={handleShare}
+                    className="absolute top-3 right-3 z-10 p-2 rounded-full bg-white/90 backdrop-blur-sm text-gray-700 shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-primary-50 hover:text-primary-600 scale-75 group-hover:scale-100"
+                    title="Compartir"
+                >
+                    <Share2 className="w-4 h-4" />
+                </button>
+
                 {/* Eye icon on hover */}
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300">
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all duration-300 pointer-events-none">
                     <div className="w-12 h-12 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-xl transform scale-50 group-hover:scale-100 transition-transform duration-300">
                         <Eye className="w-5 h-5 text-gray-700" />
                     </div>

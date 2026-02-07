@@ -50,25 +50,36 @@ export default function ModalDetalle({ novedad, onClose }) {
             case 'galeria':
                 return (
                     <div className="space-y-4">
-                        {/* Imagen principal */}
-                        <div className="rounded-xl overflow-hidden shadow-lg">
-                            <img
-                                src={novedad.url_media}
-                                alt={novedad.titulo}
-                                className="w-full h-auto object-cover"
-                            />
+                        {/* Imagen principal o Placeholder */}
+                        <div className="rounded-xl overflow-hidden shadow-lg aspect-video bg-gray-100 flex items-center justify-center relative">
+                            {novedad.url_media ? (
+                                <img
+                                    src={novedad.url_media}
+                                    alt={novedad.titulo}
+                                    className="w-full h-full object-cover"
+                                />
+                            ) : (
+                                <div className="flex flex-col items-center gap-3 text-gray-400">
+                                    <ImageIcon className="w-12 h-12 opacity-20" />
+                                    <p className="text-sm font-medium">Vista previa no disponible</p>
+                                </div>
+                            )}
                         </div>
                         {/* Miniaturas simuladas */}
                         <div className="grid grid-cols-4 gap-2">
-                            <div className="aspect-square rounded-lg overflow-hidden">
-                                <img
-                                    src={novedad.url_media}
-                                    alt="Miniatura"
-                                    className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
-                                />
+                            <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
+                                {novedad.url_media ? (
+                                    <img
+                                        src={novedad.url_media}
+                                        alt="Miniatura"
+                                        className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
+                                    />
+                                ) : (
+                                    <ImageIcon className="w-5 h-5 text-gray-300" />
+                                )}
                             </div>
-                            <div className="aspect-square rounded-lg bg-gray-200 flex items-center justify-center text-gray-500 cursor-pointer hover:bg-gray-300 transition-colors">
-                                <span className="text-sm font-medium">+ Más</span>
+                            <div className="aspect-square rounded-lg bg-gray-50 flex items-center justify-center text-gray-400 border border-gray-100 cursor-default">
+                                <span className="text-[10px] font-bold uppercase tracking-tighter">SGI</span>
                             </div>
                         </div>
                     </div>
@@ -149,13 +160,27 @@ export default function ModalDetalle({ novedad, onClose }) {
 
                     {/* Footer con acciones */}
                     <div className="mt-8 pt-6 border-t border-gray-100 flex items-center justify-between">
-                        <button className="inline-flex items-center gap-2 text-sm text-gray-500 hover:text-primary-600 transition-colors">
+                        <button
+                            onClick={() => {
+                                if (navigator.share) {
+                                    navigator.share({
+                                        title: novedad.titulo,
+                                        text: novedad.descripcion,
+                                        url: window.location.href,
+                                    }).catch(console.error);
+                                } else {
+                                    navigator.clipboard.writeText(`${novedad.titulo}\n\n${novedad.descripcion}\n\n${window.location.href}`);
+                                    alert('¡Enlace copiado al portapapeles!');
+                                }
+                            }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium text-gray-700 hover:bg-gray-100 hover:text-primary-600 transition-all duration-300"
+                        >
                             <Share2 className="w-4 h-4" />
                             Compartir
                         </button>
                         <button
                             onClick={onClose}
-                            className="px-6 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-colors"
+                            className="px-6 py-2.5 rounded-xl bg-gray-900 text-white text-sm font-medium hover:bg-gray-800 transition-colors shadow-lg shadow-gray-200"
                         >
                             Cerrar
                         </button>

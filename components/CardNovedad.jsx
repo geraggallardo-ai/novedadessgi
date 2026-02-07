@@ -44,8 +44,12 @@ export default function CardNovedad({ novedad, onClick, index = 0 }) {
         'from-emerald-500 to-teal-700',
     ];
 
+    // Auxiliares
+    const isCanvaUrl = (url) => url?.includes('canva.com/design/');
+
     const gradientClass = gradients[index % gradients.length];
-    const hasImage = novedad.url_media && novedad.tipo_contenido !== 'texto';
+    const hasImage = novedad.url_media && novedad.tipo_contenido !== 'texto' && !isCanvaUrl(novedad.url_media);
+    const isCanva = isCanvaUrl(novedad.url_media);
 
     return (
         <article
@@ -65,6 +69,22 @@ export default function CardNovedad({ novedad, onClick, index = 0 }) {
                         {/* Overlay gradiente */}
                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                     </>
+                ) : isCanva ? (
+                    <div className="flex h-full w-full flex-col items-center justify-center p-6 text-center bg-gradient-to-br from-blue-400 via-indigo-500 to-purple-600 relative overflow-hidden">
+                        {/* Decoración Canva-style */}
+                        <div className="absolute -top-10 -right-10 w-32 h-32 bg-white/10 rounded-full blur-2xl"></div>
+                        <div className="absolute -bottom-10 -left-10 w-32 h-32 bg-cyan-400/20 rounded-full blur-2xl"></div>
+
+                        <div className="z-10 bg-white/20 backdrop-blur-md p-3 rounded-2xl border border-white/30 mb-2 transform group-hover:scale-110 transition-transform duration-300">
+                            <ImageIcon className="w-8 h-8 text-white" />
+                        </div>
+                        <h3 className="relative text-lg font-bold text-white uppercase tracking-tight leading-tight z-10 line-clamp-2">
+                            {novedad.titulo}
+                        </h3>
+                        <div className="mt-2 text-[10px] font-bold text-white/80 tracking-widest uppercase bg-black/20 px-2 py-0.5 rounded">
+                            Canva Design
+                        </div>
+                    </div>
                 ) : (
                     <div
                         className={`flex h-full w-full items-center justify-center p-6 text-center bg-gradient-to-br ${gradientClass} relative`}

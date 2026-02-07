@@ -5,12 +5,37 @@ import { X, Play, FileText, Image as ImageIcon, ExternalLink, Calendar, Share2 }
 export default function ModalDetalle({ novedad, onClose }) {
     if (!novedad) return null;
 
+    // Auxiliares para detectar y procesar tipos de URL
+    const isCanvaUrl = (url) => url?.includes('canva.com/design/');
+    const getCanvaEmbedUrl = (url) => {
+        if (!url) return '';
+        // Si ya tiene parámetros, añadimos &embed, si no ?embed
+        const base = url.split('?')[0];
+        return `${base}/view?embed`;
+    };
+
     // Renderizado condicional según tipo de contenido
     const renderContenido = () => {
+        const url = novedad.url_media;
+
+        // Caso especial: Canva (puede venir en cualquier tipo de contenido)
+        if (isCanvaUrl(url)) {
+            return (
+                <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-lg bg-gray-100">
+                    <iframe
+                        className="absolute inset-0 w-full h-full border-0"
+                        src={getCanvaEmbedUrl(url)}
+                        allowFullScreen
+                        allow="fullscreen"
+                    />
+                </div>
+            );
+        }
+
         switch (novedad.tipo_contenido) {
             case 'video':
                 // Convertir URL de YouTube a embed
-                const embedUrl = novedad.url_media
+                const embedUrl = url
                     ?.replace('watch?v=', 'embed/')
                     ?.replace('youtu.be/', 'youtube.com/embed/');
                 return (
@@ -38,7 +63,7 @@ export default function ModalDetalle({ novedad, onClose }) {
                             </div>
                         </div>
                         <iframe
-                            src={novedad.url_media}
+                            src={url}
                             className="w-full h-[400px] rounded-lg border border-gray-200 bg-white"
                             frameBorder="0"
                         >
@@ -52,9 +77,9 @@ export default function ModalDetalle({ novedad, onClose }) {
                     <div className="space-y-4">
                         {/* Imagen principal o Placeholder */}
                         <div className="rounded-xl overflow-hidden shadow-lg aspect-video bg-gray-100 flex items-center justify-center relative">
-                            {novedad.url_media ? (
+                            {url ? (
                                 <img
-                                    src={novedad.url_media}
+                                    src={url}
                                     alt={novedad.titulo}
                                     className="w-full h-full object-cover"
                                 />
@@ -68,9 +93,9 @@ export default function ModalDetalle({ novedad, onClose }) {
                         {/* Miniaturas simuladas */}
                         <div className="grid grid-cols-4 gap-2">
                             <div className="aspect-square rounded-lg overflow-hidden bg-gray-100 flex items-center justify-center">
-                                {novedad.url_media ? (
+                                {url ? (
                                     <img
-                                        src={novedad.url_media}
+                                        src={url}
                                         alt="Miniatura"
                                         className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity cursor-pointer"
                                     />
